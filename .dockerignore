@@ -159,13 +159,13 @@ cython_debug/
 #docker compose
 docker*
 Dockerfile
-__pycache__
-.dbdata
 
 # poetry
 poetry.lock
 pyproject.toml
 
-# Readme
+# readme
 README*
+
+# any other files
 ignore*
