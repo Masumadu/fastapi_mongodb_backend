@@ -2,7 +2,7 @@ version: "3.8"
 services:
   backend:
     image: fastapi_mongodb_backend:latest
-    container_name: "fastapi-postgres-backend"
+    container_name: "fastapi-mongodb-backend"
     environment:
       FASTAPI_CONFIG: ${FASTAPI_CONFIG}
       SECRET_KEY: ${SECRET_KEY}

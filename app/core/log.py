@@ -35,31 +35,8 @@ class MailHandler(SMTPHandler):
         Thread(target=self.send_mail, kwargs={"record": record}).start()
 
     def send_mail(self, record):
-        try:
-            import email.utils
-            import smtplib
-            from email.message import EmailMessage
-
-            port = self.mailport
-            if not port:
-                port = smtplib.SMTP_PORT
-            smtp = smtplib.SMTP(self.mailhost, port, timeout=30)
-            msg = EmailMessage()
-            msg["From"] = self.fromaddr
-            msg["To"] = ",".join(self.toaddrs)
-            msg["Subject"] = self.getSubject(record)
-            msg["Date"] = email.utils.localtime()
-            msg.set_content(self.format(record))
-            if self.username:
-                if self.secure is not None:
-                    smtp.ehlo()
-                    smtp.starttls(*self.secure)
-                    smtp.ehlo()
-                smtp.login(self.username, self.password)
-            smtp.send_message(msg)
-            smtp.quit()
-        except Exception:
-            self.handleError(record)
+        self.timeout = 30
+        super().emit(record)
 
 
 class RequestFormatter(logging.Formatter):
