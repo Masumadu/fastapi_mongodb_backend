@@ -1,0 +1,43 @@
+#Local Setup Configuration
+#Application
+FASTAPI_CONFIG=testing | development | production
+SECRET_KEY=generate string for hashing and verifying jwt
+# Postgres
+DB_HOST=postgres database host ip
+DB_PORT=postgres database port
+DB_USER=postgres user to connect with
+DB_PASSWORD=postgres user password
+DB_NAME=postgres database name to connect to
+# Redis
+REDIS_SERVER=redis server host ip
+REDIS_PORT=redis server host port
+REDIS_PASSWORD=redis server user to connect with
+# Mail Server
+MAIL_SERVER=mail server host
+MAIL_SERVER_PORT=mail server host port
+DEFAULT_MAIL_SENDER_ADDRESS=default email address for sending mail
+DEFAULT_MAIL_SENDER_PASSWORD=default email address password
+DEFAULT_MAIL_USERNAME=default name to use for sending mail
+ADMIN_MAIL_ADDRESSES=mail addresses for receiving mail. separate addresses with "|"
+
+##Docker Compose Configuration
+##Application
+#FASTAPI_CONFIG=development
+#SECRET_KEY=secret_key
+## Postgres
+#DB_HOST=backend_db
+#DB_PORT=27017
+#DB_USER=backend_user
+#DB_PASSWORD=backend_password
+#DB_NAME=backend_db
+## Redis
+#REDIS_SERVER=redis
+#REDIS_PORT=6379
+#REDIS_PASSWORD=admin
+## Mail Server
+#MAIL_SERVER=mail server host
+#MAIL_SERVER_PORT=mail server host port
+#DEFAULT_MAIL_SENDER_ADDRESS=default email address for sending mail
+#DEFAULT_MAIL_SENDER_PASSWORD=default email address password
+#DEFAULT_MAIL_USERNAME=default name to use for sending mail
+#ADMIN_MAIL_ADDRESSES=mail addresses for receiving mail. separate addresses with "|"

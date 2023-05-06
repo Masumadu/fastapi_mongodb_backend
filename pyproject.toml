@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "fast-api-mongodb-backend"
+version = "0.1.0"
+description = ""
+authors = ["Michael Asumadu <masumadu@archsolutions.online>"]
+readme = "README.md"
+packages = [{include = "fast_api_mongodb_backend"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {extras = ["all"], version = "^0.95.1"}
+mongoengine = "^0.27.0"
+pinject = "^0.14.1"
+redis = "^4.5.4"
+pyjwt = "^2.6.0"
+pytz = "^2023.3"
+pydantic-collections = "^0.4.0"
+pre-commit = "^3.3.1"
+gunicorn = "^20.1.0"
+mongomock = "^4.1.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+fakeredis = "^2.11.2"
+pytest-mock = "^3.10.0"
+coverage = "^7.2.5"
+safety = "^2.3.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

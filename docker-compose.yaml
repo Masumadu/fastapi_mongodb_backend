@@ -1,0 +1,67 @@
+version: "3.8"
+services:
+  backend:
+    image: fastapi_mongodb_backend:latest
+    container_name: "fastapi-postgres-backend"
+    environment:
+      FASTAPI_CONFIG: ${FASTAPI_CONFIG}
+      SECRET_KEY: ${SECRET_KEY}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      REDIS_SERVER: ${REDIS_SERVER}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      MAIL_SERVER: ${MAIL_SERVER}
+      MAIL_SERVER_PORT: ${MAIL_SERVER_PORT}
+      DEFAULT_MAIL_SENDER_ADDRESS: ${DEFAULT_MAIL_SENDER_ADDRESS}
+      ADMIN_MAIL_ADDRESSES: ${ADMIN_MAIL_ADDRESSES}
+      DEFAULT_MAIL_SENDER_PASSWORD: ${DEFAULT_MAIL_SENDER_PASSWORD}
+    command: ./gunicorn_starter.sh
+    ports:
+      - "8000:8000"
+    networks:
+      - fastapi_service
+    depends_on:
+      backend_db:
+        condition: service_healthy
+      redis:
+          condition: service_healthy
+
+  backend_db:
+    image: mongo:6.0.5
+    container_name: "mongodb-server"
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+    volumes:
+      - $PWD/.ignore_mongodb_data:/data/db
+    ports:
+      - "27018:27017"
+    networks:
+      - fastapi_service
+    healthcheck:
+          test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+          interval: 10s
+          timeout: 10s
+          retries: 5
+          start_period: 40s
+
+  redis:
+    image: redis:6.2.6-alpine
+    container_name: "redis-server"
+    command: redis-server --requirepass admin
+    ports:
+      - "6378:6379"
+    networks:
+      - fastapi_service
+    healthcheck:
+        test: ["CMD", "redis-cli", "ping"]
+
+networks:
+  fastapi_service:
+    name: fastapi_network
